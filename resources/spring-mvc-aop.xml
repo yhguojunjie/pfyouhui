@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.2.xsd
+            http://www.springframework.org/schema/aop  
+            http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+    <aop:aspectj-autoproxy/>    
+	<context:annotation-config />
+	<context:component-scan base-package="com.yoxi.jgframework.interceptors" /> 
+	
+    <bean id="logInterceptor" class="com.yoxi.jgframework.interceptors.LogInterceptor" />
+    <aop:config>
+        <aop:aspect ref="logInterceptor">    
+            <!-- 登录注入，跟踪日志  -->     
+            <aop:pointcut id="login" expression="@annotation(com.yoxi.jgframework.annotation.LoginAnnotation)" />
+            <aop:around method="aroundLoginMethod" pointcut-ref="login"/>   
+            <!-- 退出注入，跟踪日志  -->     
+            <aop:pointcut id="logout" expression="@annotation(com.yoxi.jgframework.annotation.LogoutAnnotation)" />
+            <aop:around method="aroundLogoutMethod" pointcut-ref="logout"/>  
+            <!-- 删除注入，跟踪日志  -->     
+            <aop:pointcut id="delete" expression="@annotation(com.yoxi.jgframework.annotation.DeleteAnnotation)" />
+            <aop:around method="aroundDeleteMethod" pointcut-ref="delete"/>  
+            <!-- 新建、修改注入，跟踪日志  -->     
+            <aop:pointcut id="addOrUpdate" expression="@annotation(com.yoxi.jgframework.annotation.AddOrUpdateAnnotation)" />
+            <aop:around method="aroundAddOrUpdateMethod" pointcut-ref="addOrUpdate"/> 
+            <!-- 上传注入，跟踪日志  -->     
+            <aop:pointcut id="upload" expression="@annotation(com.yoxi.jgframework.annotation.UploadAnnotation)" />
+            <aop:around method="aroundUploadMethod" pointcut-ref="upload"/> 
+            <!-- 其他操作注入，跟踪日志  -->     
+            <aop:pointcut id="other" expression="@annotation(com.yoxi.jgframework.annotation.OtherAnnotation)" />
+            <aop:around method="aroundOtherMethod" pointcut-ref="other"/> 
+        </aop:aspect>        
+    </aop:config>
+</beans>

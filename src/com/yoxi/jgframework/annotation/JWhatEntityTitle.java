@@ -1,0 +1,8 @@
+package com.yoxi.jgframework.annotation;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+@Retention(RetentionPolicy.RUNTIME)
+public @interface JWhatEntityTitle {
+	  String name();
+}

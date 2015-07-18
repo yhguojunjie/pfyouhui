@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.2.xsd
+            http://www.springframework.org/schema/aop  
+            http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+	<!--定义调用对象和调用对象的方法 -->
+<!-- 	<bean id="syncCatalogJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="concurrent" value="false" />
+		调用的类
+		<property name="targetObject">
+			<ref bean="catalogContentJob" />
+		</property>
+		调用类中的方法
+		<property name="targetMethod">
+			<value>sync</value>
+		</property>
+	</bean>
+	定义触发时间
+	<bean id="syncCatalog" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="syncCatalogJob" />
+		</property>
+		cron表达式
+		<property name="cronExpression">
+			<value>0 0 13 * * ?</value>
+		</property>
+	</bean>
+
+	定义调用对象和调用对象的方法
+	<bean id="syncCatalogJob2"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="concurrent" value="false" />
+		调用的类
+		<property name="targetObject">
+			<ref bean="tyCatalogContentJob" />
+		</property>
+		调用类中的方法
+		<property name="targetMethod">
+			<value>syncCatalog</value>
+		</property>
+	</bean>
+
+	定义触发时间
+	<bean id="syncCatalog2" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="syncCatalogJob2" />
+		</property>
+		cron表达式
+		<property name="cronExpression">
+			<value>20 23 10 * * ?</value>
+		</property>
+	</bean>
+
+	增量定义调用对象和调用对象的方法
+	<bean id="syncUpdateBookInfo"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		调用的类
+		<property name="targetObject">
+			<ref bean="tyCatalogContentJob" />
+		</property>
+		调用类中的方法
+		<property name="targetMethod">
+			<value>updateBookInfo</value>
+		</property>
+	</bean>
+
+	定义触发时间
+	<bean id="syncUpdate" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="syncUpdateBookInfo" />
+		</property>
+		cron表达式
+		<property name="cronExpression">
+			<value>00 36 14 * * ?</value>
+		</property>
+	</bean>
+
+	定义调用对象和调用对象的方法
+	<bean id="syncDmCatalogJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="concurrent" value="false" />
+		调用的类
+		<property name="targetObject">
+			<ref bean="dmCatalogContentJob" />
+		</property>
+		调用类中的方法
+		<property name="targetMethod">
+			<value>sync</value>
+		</property>
+	</bean>
+	定义触发时间
+	<bean id="syncDmCatalog" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="syncDmCatalogJob" />
+		</property>
+		cron表达式
+		<property name="cronExpression">
+			<value>0 0 1 * * ?</value>
+		</property>
+	</bean>
+
+
+
+	
+		乐阅微信小时同步定时器 
+	
+	定义调用对象和调用对象的方法
+	<bean id="mpWxDataHourSyncMethod"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="concurrent" value="false" />
+		调用的类
+		<property name="targetObject">
+			<ref bean="mpWxDataSync" />
+		</property>
+		调用类中的方法
+		<property name="targetMethod">
+			<value>hourSync</value>
+		</property>
+	</bean>
+	定义触发时间
+	<bean id="mpWxDataHourSync" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail">
+			<ref bean="mpWxDataHourSyncMethod" />
+		</property>
+		<property name="startDelay">
+			<value>1800000</value>30分钟
+			 <value>60000</value>1分钟
+		</property>
+		<property name="repeatInterval">
+			<value>10800000</value>3小时
+			<value>1800000</value>30分钟
+		</property>
+	</bean>
+
+	
+		乐阅微信每天同步定时器 
+	
+	定义调用对象和调用对象的方法
+	<bean id="mpWxDataDaySyncMethod"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="concurrent" value="false" />
+		调用的类
+		<property name="targetObject">
+			<ref bean="mpWxDataSync" />
+		</property>
+		调用类中的方法
+		<property name="targetMethod">
+			<value>daySync</value>
+		</property>
+	</bean>
+	定义触发时间
+	<bean id="mpWxDataDaySync" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="mpWxDataDaySyncMethod" />
+		</property>
+		cron表达式
+		<property name="cronExpression">
+			<value>0 0 0 * * ?</value>每天的00:00
+		</property>
+	</bean>
+
+	
+		乐阅微信每周同步定时器
+	
+	定义调用对象和调用对象的方法
+	<bean id="mpWxDataWeekSyncMethod"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="concurrent" value="false" />
+		调用的类
+		<property name="targetObject">
+			<ref bean="mpWxDataSync" />
+		</property>
+		调用类中的方法
+		<property name="targetMethod">
+			<value>weekSync</value>
+		</property>
+	</bean>
+	定义触发时间
+	<bean id="mpWxDataWeekSync" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="mpWxDataWeekSyncMethod" />
+		</property>
+		cron表达式
+		<property name="cronExpression">
+			<value>0 0 1 ? * MON * ?</value>每周一1:00
+		</property>
+	</bean>
+	
+	
+		塔读每天同步定时器 
+	
+	定义调用对象和调用对象的方法
+	<bean id="taDuDataDaySyncMethod"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="concurrent" value="false" />
+		调用的类
+		<property name="targetObject">
+			<ref bean="taDuDataSync" />
+		</property>
+		调用类中的方法
+		<property name="targetMethod">
+			<value>dataSync</value>
+		</property>
+	</bean>
+	定义触发时间
+	<bean id="taDuDataDaySync" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="taDuDataDaySyncMethod" />
+		</property>
+		cron表达式
+		<property name="cronExpression">
+			<value>0 0 1 * * ?</value>每天的01:00
+		</property>
+	</bean>	
+
+
+	总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序
+	<bean id="startSyncCatalogQuertz" lazy-init="false" autowire="no"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		destroy-method="destroy">
+		<property name="configLocation" value="classpath:quartz.properties"></property>
+		<property name="triggers">
+			<list>
+				<ref bean="syncCatalog" /> <ref bean="syncDmCatalog" /> <ref bean="syncCatalog2" 
+					/>
+				<ref bean="syncCatalog" /> <ref bean="syncDmCatalog" /> <ref bean="syncCatalog2" 
+					/> <ref bean="syncUpdate" />
+				<ref bean="mpWxDataHourSync" />
+				<ref bean="mpWxDataDaySync" />
+				<ref bean="mpWxDataWeekSync" />
+				<ref bean="taDuDataDaySync" />
+			</list>
+		</property>
+	</bean> -->
+
+</beans>
